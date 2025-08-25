@@ -1,0 +1,114 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic Volume Estimation</title>
+    <style>
+    body {
+        background-image: url("https://images.unsplash.com/photo-1586805372042-327a923a697a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fHRyYWZmaWN8ZW58MHx8MHx8fDA%3D");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: Arial, sans-serif;
+        color: rgba(237, 232, 233, 0.758);
+        text-shadow: 1px 1px 2px black;
+    }
+
+        .login {
+            margin-top: 30px;
+            text-align: center;
+        }
+        form {
+            background-color: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        input, select, button {
+            margin-bottom: 15px;
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="login">
+        <center><h1>Traffic Volume Estimation</h1></center>
+
+        <form action="{{ url_for('predict') }}" method="POST">
+            <h3>Please enter the following details:</h3>
+
+            <label for="holiday">Holiday:</label>
+            <select id="holiday" name="holiday" required>
+                <option value="None">None</option>
+                <option value="2">Columbus Day</option>
+                <option value="10">Veterans Day</option>
+                <option value="9">Thanksgiving Day</option>
+                <option value="0">Christmas Day</option>
+                <option value="1">New Years Day</option>
+                <option value="11">Washingtons Birthday</option>
+                <option value="5">Memorial Day</option>
+                <option value="3">Independence Day</option>
+                <option value="8">State Fair</option>
+                <option value="4">Labor Day</option>
+                <option value="6">Martin Luther King Jr Day</option>
+            </select><br>
+
+            <label>Temperature:</label>
+            <input type="number" step="0.01" name="temp" placeholder="Temperature (e.g. 288.55)" required><br>
+
+            <label>Rain:</label>
+            <input type="number" step="0.01" name="rain" placeholder="Rain amount (e.g. 0.0)" required><br>
+
+            <label>Snow:</label>
+            <input type="number" step="0.01" name="snow" placeholder="Snow amount (e.g. 0.0)" required><br>
+
+            <label for="weather">Weather:</label>
+            <select id="weather" name="weather" required>
+                <option value="1">Clouds</option>
+                <option value="6">Rain</option>
+                <option value="5">Mist</option>
+                <option value="4">Haze</option>
+                <option value="3">Fog</option>
+                <option value="10">Thunderstorm</option>
+                <option value="0">Drizzle</option>
+                <option value="8">Squall</option>
+                <option value="7">Smoke</option>
+            </select><br>
+
+            <label>Year:</label>
+            <input type="number" name="year" min="2012" max="2022" placeholder="e.g. 2018" required><br>
+
+            <label>Month:</label>
+            <input type="number" name="month" min="1" max="12" placeholder="e.g. 7" required><br>
+
+            <label>Day:</label>
+            <input type="number" name="day" min="1" max="31" placeholder="e.g. 25" required><br>
+
+            <label>Hour:</label>
+            <input type="number" name="hours" min="0" max="23" placeholder="0 - 23" required><br>
+
+            <label>Minutes:</label>
+            <input type="number" name="minutes" min="0" max="59" placeholder="0 - 59" required><br>
+
+            <label>Seconds:</label>
+            <input type="number" name="seconds" min="0" max="59" placeholder="0 - 59" required><br>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <br><br>
+        {% if prediction_text %}
+            <h2>{{ prediction_text }}</h2>
+        {% endif %}
+    </div>
+</body>
+</html>
